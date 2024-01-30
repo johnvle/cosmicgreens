@@ -3,6 +3,7 @@ type Location {
   id: ID!
   name: String!
   location: String!
+  menuItems: [MenuItem!]!
 }
 
 type MenuItem {
@@ -10,12 +11,29 @@ type MenuItem {
   name: String!
   description: String
   price: Float!
-  location: Location!
+}
+
+
+type ShoppingCartItem {
+  menuItem: MenuItem!
+  quantity: Int!
+}
+
+type ShoppingCart {
+  items: [ShoppingCartItem!]!
+  subTotal: Float!
 }
 
 type Query {
-  # Query to fetch menu items for a specific location
+  location(id: ID!): Location!
   locations: [Location]!
-  menuItems(locationId: ID!): [MenuItem!]!
+  # menuItems(locationId: ID!): [MenuItem!]!
+  shoppingCart: ShoppingCart!
 }
-`
+
+type Mutation {
+  addToCart(menuItemId: ID!, quantity: Int!): ShoppingCart!
+  removeFromCart(menuItemId: ID!): ShoppingCart!
+  checkout: ShoppingCart!
+}
+`;

@@ -10,6 +10,9 @@ import ConfirmationPage from "./components/pages/ConfirmationPage";
 // import context
 import { CartContextProvider } from "./context/cart-context";
 
+// context or redux
+
+
 function App() {
   return (
     <div>
