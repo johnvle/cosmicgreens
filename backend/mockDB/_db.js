@@ -34,7 +34,7 @@ const nuwaMenuItems = [
     id: "nuwa5",
     name: "Stellar Spinach Wrap",
     description:
-      "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem.",
+      "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing.",
     price: 2000,
     locationId: "2",
   },
@@ -49,7 +49,7 @@ const nuwaMenuItems = [
     id: "nuwa7",
     name: "Celestial Chia Pudding",
     description:
-      "Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget.",
+      "Donec ut mauris eget massa tempor convallis. Nulla neque libero.",
     price: 7790,
     locationId: "2",
   },

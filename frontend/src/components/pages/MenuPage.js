@@ -5,7 +5,11 @@ import { useLocation } from "../../context/location-context";
 import { useCart } from "../../context/cart-context";
 import NavBar from "../common/NavBar";
 import { GET_MENU_ITEMS } from "../../graphql/queries";
-import { handlePriceConversion, isItemInCart, getCartItemQuantity } from "../../utils/utils";
+import {
+  handlePriceConversion,
+  isItemInCart,
+  getCartItemQuantity,
+} from "../../utils/utils";
 // import MenuItemsList from "../common/MenuItemList";
 
 // BONUS: local storage for menu items
@@ -54,7 +58,7 @@ function MenuPage() {
     const isItemPresent = isItemInCart(cartItems, menuItemID);
     if (isItemPresent) {
       subtractFromCart(locationId, menuItemID);
-    } 
+    }
   };
   // REMOVE FROM CART as defined by GraphQL resolvers and cart-context
   // client-side validation: break if the count is already 0
@@ -106,14 +110,12 @@ function MenuPage() {
             </div>
           </div>
         </header>
-        <div className="text-2xl font-semibold mt-2 mb-4 ml-8">
-          Menu items:
-        </div>
+        <div className="text-2xl font-semibold mt-2 mb-4 ml-8">Menu items:</div>
         <section className="flex flex-wrap max-w-screen justify-evenly">
           {menuItems.map((menuItem) => (
             <div
               key={menuItem.id}
-              className="bg-[#E8DBC5]  flex flex-col shrink border rounded h-[27rem] w-80 my-4 p-4 relative"
+              className="bg-[#E8DBC5]  flex flex-col shrink rounded h-[27rem] w-80 my-4 p-4 relative"
             >
               <img
                 src="https://static.vecteezy.com/system/resources/previews/015/698/916/original/cartoon-food-doodle-kawaii-anime-coloring-page-cute-illustration-drawing-clipart-character-chibi-manga-comics-free-png.png"
@@ -159,7 +161,6 @@ function MenuPage() {
                   </button>
                 </div>
               </div>
-              <hr />
             </div>
           ))}
         </section>
