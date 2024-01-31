@@ -11,10 +11,8 @@ function LocationsPage() {
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_LOCATIONS);
   const { dispatch } = useLocation();
-  
-  const {
-    cartItems
-  } = useCart();
+
+  const { cartItems } = useCart();
 
   // location-context
   const { state } = useLocation();
@@ -28,9 +26,11 @@ function LocationsPage() {
   //  prod notes: might be better to serve location from backend like url?location=locationId. In this way, links persists the menu data from x location if user were to share url.
 
   const handleLocationClick = (locationId) => {
-    console.log(selectedLocation); 
+    console.log(selectedLocation);
     if (cartItems.length > 0 && locationId !== selectedLocation) {
-      window.alert("Cannot add item to cart from multiple locations. Please clear or checkout your existing shopping cart. Thank you!");
+      window.alert(
+        "Cannot add item to cart from multiple locations. Please clear or checkout your existing shopping cart. Thank you!"
+      );
       return;
     }
     dispatch({ type: "SELECT_LOCATION", payload: locationId });
@@ -42,7 +42,11 @@ function LocationsPage() {
       <NavBar></NavBar>
       <div className="flex">
         <div className="md:w-full bg-[#A9C1A9] w-0 flex justify-center items-center">
-          {"<Maps_API_Placeholder>"}
+          <img
+            src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            className="w-full h-full object-cover"
+            alt="Cover"
+          ></img>
         </div>
         <div className="bg-[#F4F3E7] w-full min-h-screen md:w-1/3">
           <div className="flex justify-center py-6 underline">
