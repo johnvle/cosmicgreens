@@ -3,7 +3,8 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { BrowserRouter as Router } from "react-router-dom";
-import MenuPage, { GET_MENU_ITEMS } from "../../src/components/pages/MenuPage";
+import MenuPage from "../../src/components/pages/MenuPage";
+import { GET_MENU_ITEMS } from "../../src/graphql/queries";
 import { LocationProvider } from "../../src/context/location-context";
 
 jest.mock("../../src/context/cart-context", () => ({

@@ -16,14 +16,6 @@ const GET_LOCATION = gql`
 
 function ConfirmationPage() {
   const navigate = useNavigate();
-  // const handlePriceConversion = (priceInCents) => {
-  //   return (priceInCents / 100).toLocaleString(undefined, {
-  //     minimumFractionDigits: 2,
-  //     maximumFractionDigits: 2,
-  //   });
-  // };
-  // grab global cartItems data from cart-context
-  // const { subTotal } = useCart();
 
   // location-context
   const { state } = useLocation();
@@ -41,11 +33,16 @@ function ConfirmationPage() {
   return (
     <>
       <NavBar></NavBar>
-      <div>
-        <div className="text-2xl font-bold underline ">Thank you</div>
-        <div>Ordered From: {name}</div>
-        <div>Address: {location}</div>
-        <button onClick={() => navigate("/locations")}>Order more</button>
+      <div className="flex flex-col items-center justify-center h-screen bg-[#E8DBC5] space-y-2">
+        <div className="font-serif text-4xl font-bold mb-4">Thank you</div>
+        <div className="text-lg font-light">Ordered From: {name}</div>
+        <div className="text-lg font-thin">Address: {location}</div>
+        <button
+          className="border border-slate-200 px-12 py-3 rounded-full bg-transparent text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out "
+          onClick={() => navigate("/locations")}
+        >
+          Order more
+        </button>
       </div>
     </>
   );

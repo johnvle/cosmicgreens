@@ -4,9 +4,8 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { BrowserRouter as Router } from "react-router-dom";
 import { LocationProvider } from "../../src/context/location-context";
-import LocationsPage, {
-  GET_LOCATIONS,
-} from "../../src/components/pages/LocationsPage";
+import LocationsPage from "../../src/components/pages/LocationsPage";
+import { GET_LOCATIONS } from "../../src/graphql/queries";
 
 const mocks = [
   {

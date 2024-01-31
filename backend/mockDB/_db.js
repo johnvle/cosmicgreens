@@ -34,7 +34,7 @@ const nuwaMenuItems = [
     id: "nuwa5",
     name: "Stellar Spinach Wrap",
     description:
-      "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.",
+      "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem.",
     price: 2000,
     locationId: "2",
   },
@@ -49,7 +49,7 @@ const nuwaMenuItems = [
     id: "nuwa7",
     name: "Celestial Chia Pudding",
     description:
-      "Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum.",
+      "Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget.",
     price: 7790,
     locationId: "2",
   },
@@ -72,7 +72,7 @@ const nuwaMenuItems = [
     id: "nuwa10",
     name: "Supernova Salad Wrap",
     description:
-      "Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst.",
+      "Donec dapibus. Duis at velit eu est congue elementum.",
     price: 704,
     locationId: "2",
   },
@@ -133,7 +133,7 @@ const hollywoodMenuItems = [
     id: "hw8",
     name: "Brown Rice Bowl",
     description:
-      "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
+      "Nulla ut erat id mauris vulputate elementum. Nullam varius.",
     price: 1629,
     locationId: "1",
   },
