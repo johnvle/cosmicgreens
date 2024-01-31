@@ -20,7 +20,6 @@ function ConfirmationPage() {
   // location-context
   const { state } = useLocation();
   const locationId = state.selectedLocation;
-  console.log("locationId", locationId);
   const { loading, error, data } = useQuery(GET_LOCATION, {
     variables: { locationId },
   });
@@ -38,7 +37,7 @@ function ConfirmationPage() {
         <div className="text-lg font-light">Ordered From: {name}</div>
         <div className="text-lg font-thin">Address: {location}</div>
         <button
-          className="border border-slate-200 px-12 py-3 rounded-full bg-transparent text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out "
+          className="border border-slate-200 px-12 py-3 rounded-full text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out "
           onClick={() => navigate("/locations")}
         >
           Order more

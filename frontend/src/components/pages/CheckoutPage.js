@@ -97,7 +97,7 @@ function CartSummary() {
                 <div>Subtotal:</div>
                 <div>${handlePriceConversion(subTotal)}</div>
               </div>
-              <div className="border border-slate-200 px-4 py-2 rounded-full bg-transparent text-md bg-[#00483C] text-white hover:bg-[#00725f] hover:text-white transition ease-in-out ml-4 mr-4 font-light text-center my-2">
+              <div className="border border-slate-200 px-4 py-2 rounded-full text-md bg-[#00483C] text-white hover:bg-[#00725f] hover:text-white transition ease-in-out ml-4 mr-4 font-light text-center my-2">
                 <button className="p-1 " onClick={() => handleCheckoutCart()}>
                   Place order
                 </button>

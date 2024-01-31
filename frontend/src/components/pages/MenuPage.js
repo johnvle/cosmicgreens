@@ -5,7 +5,7 @@ import { useLocation } from "../../context/location-context";
 import { useCart } from "../../context/cart-context";
 import NavBar from "../common/NavBar";
 import { GET_MENU_ITEMS } from "../../graphql/queries";
-import { handlePriceConversion } from "../../utils/utils";
+import { handlePriceConversion, isItemInCart, getCartItemQuantity } from "../../utils/utils";
 // import MenuItemsList from "../common/MenuItemList";
 
 // BONUS: local storage for menu items
@@ -28,13 +28,10 @@ function MenuPage() {
 
   useEffect(() => {
     setCurrentCartLength(cartItems.length);
-    console.log("cartITEMS", cartItems);
     let total = 0;
     for (let shoppingCartItem of cartItems) {
-      console.log("shoppingCartItem in cartItems", shoppingCartItem);
       total += shoppingCartItem.quantity;
     }
-    console.log("total", total);
     setCurrentCartTotal(total);
   }, [cartItems, itemQuantities]);
 
@@ -52,37 +49,26 @@ function MenuPage() {
       [menuItemID]: (prevQuantities[menuItemID] || 0) + 1,
     }));
   };
-  // SUBTRACT FROM CART as defined by GraphQL resolvers and cart-context
-  // client-side validation: break if the count is already 0
-  const handleSubtractFromCart = (locationId, menuItemID) => {
-    const currentQuantity = itemQuantities[menuItemID] || 0;
 
-    if (currentQuantity > 0) {
+  const handleSubtractFromCart = (locationId, menuItemID) => {
+    const isItemPresent = isItemInCart(cartItems, menuItemID);
+    if (isItemPresent) {
       subtractFromCart(locationId, menuItemID);
-      setItemQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [menuItemID]: currentQuantity - 1,
-      }));
-    }
+    } 
   };
   // REMOVE FROM CART as defined by GraphQL resolvers and cart-context
   // client-side validation: break if the count is already 0
   const handleRemoveFromCart = (locationId, menuItemID) => {
-    const currentQuantity = itemQuantities[menuItemID] || 0;
-
-    if (currentQuantity > 0) {
+    const isItemPresent = isItemInCart(cartItems, menuItemID);
+    if (isItemPresent) {
       removeFromCart(locationId, menuItemID);
-      setItemQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [menuItemID]: 0,
-      }));
     }
   };
   return (
     <>
       <NavBar></NavBar>
       <div className="bg-[#F4F3E7] ">
-        <header className="border-b flex md:h-32 md:w-full">
+        <header className="border-b border-slate-600 flex md:h-32 md:w-full">
           <div
             id="ordering-from"
             className="font-serif md:w-1/3 md:text-3xl lg:text-4xl flex flex-col justify-center ml-8"
@@ -112,7 +98,7 @@ function MenuPage() {
             </div>
             <div className="font-semibold rounded">
               <button
-                className="border border-slate-200 px-12 py-3 rounded-full bg-transparent text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out absolute bottom right-12"
+                className="border border-slate-200 px-12 py-3 rounded-full text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out absolute bottom right-12"
                 onClick={() => navigate("/checkout")}
               >
                 Check out
@@ -120,7 +106,7 @@ function MenuPage() {
             </div>
           </div>
         </header>
-        <div className="text-2xl font-bold underline mt-2 mb-6 ml-8">
+        <div className="text-2xl font-semibold mt-2 mb-4 ml-8">
           Menu items:
         </div>
         <section className="flex flex-wrap max-w-screen justify-evenly">
@@ -134,17 +120,16 @@ function MenuPage() {
                 alt="snapshot of the item"
                 className="scale-80"
               ></img>
-              <div className="absolute top right-4 rounded-full ">
-                {itemQuantities[menuItem.id] > 0 ? (
+              <div className="absolute top right-4 rounded-full">
+                {isItemInCart(cartItems, menuItem.id) && (
                   <div className="font-medium border border-black px-2 rounded-full">
-                    {itemQuantities[menuItem.id] || 0}
+                    {getCartItemQuantity(cartItems, menuItem.id)}
                   </div>
-                ) : (
-                  <>{""}</>
                 )}
               </div>
+
               <div className="font-bold">{menuItem.name}</div>
-              <div className="font-light">{menuItem.description}</div>
+              <div className="font-light ">{menuItem.description}</div>
               <div className="font-extralight text-sm absolute bottom-2 border border-slate-800 px-3 py-1 rounded-md">
                 ${handlePriceConversion(menuItem.price)}
               </div>

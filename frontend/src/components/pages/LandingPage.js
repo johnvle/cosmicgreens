@@ -23,7 +23,7 @@ function LandingPage() {
         </div>
         <section>
           <button
-            className="border border-slate-200 px-12 py-3 rounded-full bg-transparent text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out "
+            className="border border-slate-200 px-12 py-3 rounded-full text-md bg-lime-200 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out "
             onClick={() => navigate("/locations")}
           >
             ORDER NOW
