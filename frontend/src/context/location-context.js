@@ -11,7 +11,6 @@ const locationReducer = (state, action) => {
   switch (action.type) {
     case "SELECT_LOCATION":
       const newState = { ...state, selectedLocation: action.payload };
-      console.log("NEWSTATE", newState);
       localStorage.setItem("selectedLocation", JSON.stringify(newState));
       return newState;
     default:

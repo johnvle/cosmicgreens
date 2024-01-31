@@ -5,7 +5,7 @@ import { useLocation } from "../../context/location-context";
 import { useCart } from "../../context/cart-context";
 import NavBar from "../common/NavBar";
 
-const GET_MENU_ITEMS = gql`
+export const GET_MENU_ITEMS = gql`
   query GetMenuItems($locationId: ID!) {
     location(id: $locationId) {
       name

@@ -35,8 +35,6 @@ describe("Locations Page", () => {
         </MockedProvider>
       </LocationProvider>
     );
-
-    // Wait for loading state to disappear
     await waitFor(() => {
       expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
     });
@@ -45,7 +43,6 @@ describe("Locations Page", () => {
     expect(screen.getByText("Location Name: Location A")).toBeInTheDocument();
     expect(screen.getByText("Location Name: Location B")).toBeInTheDocument();
 
-    // Simulate button click
     const orderNowButtons = screen.getAllByText("Order Now");
     expect(orderNowButtons).toHaveLength(2); // Assuming there are two locations
 
