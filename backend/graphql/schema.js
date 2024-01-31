@@ -7,12 +7,11 @@ type Location {
 }
 
 type MenuItem {
-  id: ID!
+  id: String!
   name: String!
   description: String
   price: Float!
 }
-
 
 type ShoppingCartItem {
   menuItem: MenuItem!
@@ -32,8 +31,9 @@ type Query {
 }
 
 type Mutation {
-  addToCart(menuItemId: ID!, quantity: Int!): ShoppingCart!
-  removeFromCart(menuItemId: ID!): ShoppingCart!
+  addToCart(locationId: ID!, menuItemId: ID!, quantity: Int!): ShoppingCart!
+  removeFromCart(locationId: ID!, menuItemId: ID!): ShoppingCart!
+  subtractFromCart(locationId: ID!, menuItemId: ID!): ShoppingCart!
   checkout: ShoppingCart!
 }
 `;

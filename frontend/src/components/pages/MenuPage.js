@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "../../context/location-context";
@@ -19,7 +19,17 @@ const GET_MENU_ITEMS = gql`
   }
 `;
 
+// BONUS: local storage for menu items
 function MenuPage() {
+  const handlePriceConversion = (priceInCents) => {
+    return (priceInCents / 100).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+  const [currentCartLength, setCurrentCartLength] = useState(0);
+  const [itemQuantities, setItemQuantities] = useState({});
+
   const navigate = useNavigate();
 
   // location-context
@@ -31,7 +41,11 @@ function MenuPage() {
   });
 
   // cart-context
-  const { addToCart } = useCart();
+  const { addToCart, subtractFromCart, removeFromCart, cartItems } = useCart();
+  // updates state
+  useEffect(() => {
+    setCurrentCartLength(cartItems.length);
+  }, [cartItems]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -39,33 +53,91 @@ function MenuPage() {
   const location = data.location;
   const menuItems = location.menuItems;
 
-  const handleAddToCart = (menuItem) => {
-    console.log('menu Item', menuItem); 
-    addToCart(menuItem); // Call addToCart from the cart-context
+  // ADD TO CART as defined by GraphQL resolvers and cart-context
+  const handleAddToCart = (locationId, menuItemID, quantity) => {
+    addToCart(locationId, menuItemID, 1);
+    setItemQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [menuItemID]: (prevQuantities[menuItemID] || 0) + 1,
+    }));
   };
-
+  // SUBTRACT FROM CART as defined by GraphQL resolvers and cart-context
+  const handleSubtractFromCart = (locationId, menuItemID) => {
+    subtractFromCart(locationId, menuItemID);
+    setItemQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [menuItemID]: (prevQuantities[menuItemID] || 0) - 1,
+    }));
+  };
+  // REMOVE FROM CART as defined by GraphQL resolvers and cart-context
+  const hanldeRemoveFromCart = (locationId, menuItemID) => {
+    removeFromCart(locationId, menuItemID);
+    setItemQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [menuItemID]: 0,
+    }));
+  };
   return (
     <>
       <NavBar></NavBar>
       <div>
+        <div>
+          Unique Items: {currentCartLength}
+          <div>
+            <button
+              className="p-1 border"
+              onClick={() => navigate("/checkout")}
+            >
+              Check out
+            </button>
+          </div>
+        </div>
         <div className="text-2xl font-bold underline">Menu items:</div>
         <ul>
           {menuItems.map((menuItem) => (
             <li key={menuItem.id}>
               <h3>{menuItem.name}</h3>
               <p>{menuItem.description}</p>
-              <p>Price: ${menuItem.price}</p>
-              <p>ID: {menuItem.id}</p>
-              <button onClick={() => handleAddToCart(menuItem.id)}>
-                Add to Cart
-              </button>
+              <p>Price: ${handlePriceConversion(menuItem.price)}</p>
+              <div className="flex flex-row">
+                <div className="flex flex-row items-center">
+                  <button
+                    className="p-1 border"
+                    onClick={() => handleAddToCart(locationId, menuItem.id, 1)}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    className="p-1 border"
+                    onClick={() =>
+                      handleSubtractFromCart(locationId, menuItem.id)
+                    }
+                  >
+                    Subtract from Cart
+                  </button>
+                  <button
+                    className="p-1 border"
+                    onClick={() =>
+                      hanldeRemoveFromCart(locationId, menuItem.id)
+                    }
+                  >
+                    Remove from Cart
+                  </button>
+                  <div>
+                    {itemQuantities[menuItem.id] > 0 ? (
+                      <div className="font-bold">
+                        Count: {itemQuantities[menuItem.id] || 0}
+                      </div>
+                    ) : (
+                      <>{""}</>
+                    )}
+                  </div>
+                </div>
+              </div>
               <hr />
             </li>
           ))}
         </ul>
-        <div>
-          <button onClick={() => navigate("/checkout")}>Check out</button>
-        </div>
       </div>
     </>
   );

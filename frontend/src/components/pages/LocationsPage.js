@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "../../context/location-context";
 import NavBar from "../common/NavBar";
 
-const GET_LOCATIONS = gql`
+export const GET_LOCATIONS = gql`
   query {
     locations {
       id
@@ -24,9 +24,7 @@ function LocationsPage() {
 
   const handleLocationClick = (locationId) => {
     // Dispatch an action to set the selected location
-    console.log(locationId);
     dispatch({ type: 'SELECT_LOCATION', payload: locationId });
-    console.log(state); 
     navigate("/menu");
   };
 

@@ -1,58 +1,86 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "../../context/location-context";
 import { useCart } from "../../context/cart-context";
-import { useQuery, gql } from "@apollo/client";
-import NavBar from "../common/NavBar";
 
-const GET_CART_ITEMS = gql`
-  query GetCartItems($itemIds: [ID!]!) {
-    locations {
-      menuItems(ids: $itemIds) {
-        id
-        name
-        description
-        price
-      }
-    }
-  }
-`;
-
-function CheckoutPage() {
+function CartSummary() {
+  const handlePriceConversion = (priceInCents) => {
+    return (priceInCents / 100).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
   const navigate = useNavigate();
-  const { cartItems } = useCart();
 
-  // Extract item ids from cartItems
-  const itemIds = cartItems.map((item) => item.menuItem.id);
+  // location-context
+  const { state } = useLocation();
+  const locationId = state.selectedLocation;
 
-  // Fetch details of items in the cart using GraphQL query
-  const { loading, error, data } = useQuery(GET_CART_ITEMS, {
-    variables: { itemIds },
-  });
+  // grab global cartItems data from cart-context
+  const {
+    subtractFromCart,
+    removeFromCart,
+    checkoutCart,
+    cartItems,
+    subTotal,
+  } = useCart();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const handleSubtractFromCart = (locationId, menuItemId) => {
+    subtractFromCart(locationId, menuItemId);
+  };
 
-  const cartItemsDetails = data.locations.flatMap((location) => location.menuItems);
+  const handleRemoveFromCart = (locationId, menuItemId) => {
+    removeFromCart(locationId, menuItemId);
+  };
+
+  const handleCheckoutCart = () => {
+    checkoutCart();
+    navigate("/confirmation");
+  };
 
   return (
-    <>
+    <div>
       <div>
-        <NavBar></NavBar>
-        <div className="text-2xl font-bold underline">Your cart:</div>
-        <ul>
-          {cartItemsDetails.map((item) => (
-            <li key={item.id}>
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <p>Price: ${item.price}</p>
-              <hr />
-            </li>
-          ))}
-        </ul>
-        <button onClick={() => navigate("/confirmation")}>Buy now</button>
+        <button className="p-1 border" onClick={() => navigate("/menu")}>
+          Back to menu
+        </button>
       </div>
-    </>
+      <h2>Cart Summary</h2>
+      <ul>
+        {cartItems.map((cartItem) => (
+          <li key={cartItem.menuItem.id}>
+            <h3>{cartItem.menuItem.name}</h3>
+            <p>Description: {cartItem.menuItem.description}</p>
+            <p>Price: ${handlePriceConversion(cartItem.menuItem.price)}</p>
+            <p>Quantity: {cartItem.quantity}</p>
+            <button
+              className="border p-1"
+              onClick={() =>
+                handleSubtractFromCart(locationId, cartItem.menuItem.id)
+              }
+            >
+              Subtract from Cart
+            </button>
+            <button
+              className="border p-1"
+              onClick={() =>
+                handleRemoveFromCart(locationId, cartItem.menuItem.id)
+              }
+            >
+              Remove from Cart
+            </button>
+            <hr />
+          </li>
+        ))}
+      </ul>
+      <div>SUBTOTAL: ${handlePriceConversion(subTotal)}</div>
+      <div>
+        <button className="border p-1" onClick={() => handleCheckoutCart()}>
+          Buy now!
+        </button>
+      </div>
+    </div>
   );
 }
 
-export default CheckoutPage;
+export default CartSummary;
