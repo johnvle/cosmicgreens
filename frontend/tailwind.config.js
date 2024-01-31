@@ -2,7 +2,9 @@
 module.exports = {
   content: ["./public/index.html","./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      'sweetgreen-beige': '#F4F3E7',
+    },
   },
   plugins: [],
 }

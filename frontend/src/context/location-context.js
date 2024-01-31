@@ -3,6 +3,7 @@ import React, { createContext, useReducer, useContext } from "react";
 // Define the initial state
 let initialState = {
   selectedLocation: null,
+  cartEmpty: true,
 };
 
 const LocationContext = createContext();
@@ -10,8 +11,11 @@ const LocationContext = createContext();
 const locationReducer = (state, action) => {
   switch (action.type) {
     case "SELECT_LOCATION":
-      const newState = { ...state, selectedLocation: action.payload };
-      console.log("NEWSTATE", newState);
+      const newState = {
+        ...state,
+        selectedLocation: action.payload,
+        cartEmpty: true,
+      };
       localStorage.setItem("selectedLocation", JSON.stringify(newState));
       return newState;
     default:
