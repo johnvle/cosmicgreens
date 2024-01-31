@@ -22,6 +22,7 @@ function LocationsPage() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  // instead of keeping location in state, might be better to serve that page from backend like url?location=locationId. Then, if you send someone the link it persists the menu from x location.
   const handleLocationClick = (locationId) => {
     // Dispatch an action to set the selected location
     dispatch({ type: 'SELECT_LOCATION', payload: locationId });

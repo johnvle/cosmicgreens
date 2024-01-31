@@ -18,9 +18,9 @@ const GET_MENU_ITEMS = gql`
     }
   }
 `;
-
 // BONUS: local storage for menu items
 function MenuPage() {
+  // good to make a file like utils.ts for these funcs
   const handlePriceConversion = (priceInCents) => {
     return (priceInCents / 100).toLocaleString(undefined, {
       minimumFractionDigits: 2,
@@ -36,6 +36,7 @@ function MenuPage() {
   const { state } = useLocation();
   const locationId = state.selectedLocation;
 
+  // put hooks in the same place on the top of the function
   const { loading, error, data } = useQuery(GET_MENU_ITEMS, {
     variables: { locationId },
   });
@@ -64,6 +65,8 @@ function MenuPage() {
   // SUBTRACT FROM CART as defined by GraphQL resolvers and cart-context
   const handleSubtractFromCart = (locationId, menuItemID) => {
     subtractFromCart(locationId, menuItemID);
+    // add some client side check here to break if zero already
+
     setItemQuantities((prevQuantities) => ({
       ...prevQuantities,
       [menuItemID]: (prevQuantities[menuItemID] || 0) - 1,
@@ -71,6 +74,8 @@ function MenuPage() {
   };
   // REMOVE FROM CART as defined by GraphQL resolvers and cart-context
   const hanldeRemoveFromCart = (locationId, menuItemID) => {
+    // add some client side check here to break if zero already
+
     removeFromCart(locationId, menuItemID);
     setItemQuantities((prevQuantities) => ({
       ...prevQuantities,
