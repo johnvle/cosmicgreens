@@ -1,31 +1,32 @@
 // src/App.js
-import React from 'react';// Import everything needed to use the `useQuery` hook
-import { useQuery, gql } from '@apollo/client';
+import React from "react"; // Import everything needed to use the `useQuery` hook
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import pages
+import LocationsPage from "./components/pages/LocationsPage";
+import LandingPage from "./components/pages/LandingPage";
+import MenuPage from "./components/pages/MenuPage";
+import CheckoutPage from "./components/pages/CheckoutPage";
+import ConfirmationPage from "./components/pages/ConfirmationPage";
+// import context
+import { CartContextProvider } from "./context/cart-context";
 
-const GET_LOCATIONS = gql`
-  query {
-    locations {
-      name
-      location
-    }
-  }
-`;
+// context or redux
+
 
 function App() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
-    <div className="App">
-      E-Commerce App
-      {data.locations.map(location => (
-        <div key={location.location}>
-          <p>Location Name: {location.name}</p>
-          <p>Address: {location.location}</p>
-        </div>
-      ))}
+    <div>
+      <CartContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/locations" element={<LocationsPage />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/confirmation" element={<ConfirmationPage />} />
+          </Routes>
+        </BrowserRouter>
+      </CartContextProvider>
     </div>
   );
 }
