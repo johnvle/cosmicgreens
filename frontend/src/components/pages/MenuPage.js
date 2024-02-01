@@ -20,15 +20,15 @@ function MenuPage() {
   // const [currentCartLength, setCurrentCartLength] = useState(0);
   const [currentCartTotal, setCurrentCartTotal] = useState(0);
   const [itemQuantities, setItemQuantities] = useState({});
+  const { loading, error, data } = useQuery(GET_MENU_ITEMS, {
+    variables: { locationId },
+  });
+
   const navigate = useNavigate();
 
   // location-context
   const { state } = useLocation();
   const locationId = state.selectedLocation;
-
-  const { loading, error, data } = useQuery(GET_MENU_ITEMS, {
-    variables: { locationId },
-  });
 
   // cart-context
   const { addToCart, subtractFromCart, removeFromCart, cartItems } = useCart();

@@ -1,5 +1,4 @@
-// src/App.js
-import React from "react"; // Import everything needed to use the `useQuery` hook
+import React from "react"; 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import pages
 import LocationsPage from "./components/pages/LocationsPage";
@@ -7,11 +6,7 @@ import LandingPage from "./components/pages/LandingPage";
 import MenuPage from "./components/pages/MenuPage";
 import CheckoutPage from "./components/pages/CheckoutPage";
 import ConfirmationPage from "./components/pages/ConfirmationPage";
-// import context
 import { CartContextProvider } from "./context/cart-context";
-
-// context or redux
-
 
 function App() {
   return (
