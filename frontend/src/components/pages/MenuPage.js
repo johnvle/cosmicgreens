@@ -10,11 +10,14 @@ import {
   isItemInCart,
   getCartItemQuantity,
 } from "../../utils/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
 // import MenuItemsList from "../common/MenuItemList";
 
 // BONUS: local storage for menu items
 function MenuPage() {
-  const [currentCartLength, setCurrentCartLength] = useState(0);
+  // const [currentCartLength, setCurrentCartLength] = useState(0);
   const [currentCartTotal, setCurrentCartTotal] = useState(0);
   const [itemQuantities, setItemQuantities] = useState({});
   const navigate = useNavigate();
@@ -31,7 +34,6 @@ function MenuPage() {
   const { addToCart, subtractFromCart, removeFromCart, cartItems } = useCart();
 
   useEffect(() => {
-    setCurrentCartLength(cartItems.length);
     let total = 0;
     for (let shoppingCartItem of cartItems) {
       total += shoppingCartItem.quantity;
@@ -70,9 +72,9 @@ function MenuPage() {
   };
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar currentCartLength={currentCartTotal} />{" "}
       <div className="bg-[#F4F3E7] ">
-        <header className="border-b border-slate-600 flex md:h-32 md:w-full">
+        <header className="border-b border-slate-400 flex md:h-48 md:w-full">
           <div
             id="ordering-from"
             className="font-serif md:w-1/3 md:text-3xl lg:text-4xl flex flex-col justify-center ml-8"
@@ -95,27 +97,14 @@ function MenuPage() {
           <div
             id="menu-local-shopping-cart"
             className=" md:w-1/3 flex flex-col justify-center px-8 relative"
-          >
-            <div className="font-light">{currentCartLength} unique items</div>
-            <div className="font-light">
-              {currentCartTotal} total items in cart
-            </div>
-            <div className="font-semibold rounded">
-              <button
-                className="border border-slate-200 px-12 py-3 rounded-full text-md bg-lime-300 text-[#00473B] hover:bg-[#00483C] hover:text-white transition ease-in-out absolute bottom right-12"
-                onClick={() => navigate("/checkout")}
-              >
-                Check out
-              </button>
-            </div>
-          </div>
+          ></div>
         </header>
-        <div className="text-2xl font-semibold mt-2 mb-4 ml-8">Menu items:</div>
+        <div className="text-2xl font-light mt-10 mb-4 ml-8">Menu items:</div>
         <section className="flex flex-wrap max-w-screen justify-evenly">
           {menuItems.map((menuItem) => (
             <div
               key={menuItem.id}
-              className="bg-[#E8DBC5]  flex flex-col shrink rounded h-[27rem] w-80 my-4 p-4 relative"
+              className="bg-[#E8DBC5] flex flex-col shrink rounded-lg h-[30rem] w-[22rem] my-4 p-6 relative"
             >
               <img
                 src="https://static.vecteezy.com/system/resources/previews/015/698/916/original/cartoon-food-doodle-kawaii-anime-coloring-page-cute-illustration-drawing-clipart-character-chibi-manga-comics-free-png.png"
@@ -124,41 +113,44 @@ function MenuPage() {
               ></img>
               <div className="absolute top right-4 rounded-full">
                 {isItemInCart(cartItems, menuItem.id) && (
-                  <div className="font-medium border border-black px-2 rounded-full">
+                  <div className="font-medium border border-black px-3 p-1 rounded-full">
                     {getCartItemQuantity(cartItems, menuItem.id)}
                   </div>
                 )}
               </div>
-
               <div className="font-bold">{menuItem.name}</div>
               <div className="font-light ">{menuItem.description}</div>
-              <div className="font-extralight text-sm absolute bottom-2 border border-slate-800 px-3 py-1 rounded-md">
+              <div className="font-extralight text-sm absolute bottom-6 border-black border px-4 py-1 rounded-full ">
                 ${handlePriceConversion(menuItem.price)}
               </div>
-              <div className="flex flex-row absolute bottom-2 right-2 ">
+              <div className="flex flex-row absolute bottom-6 right-4 ">
                 <div className="flex flex-row items-center">
                   <button
-                    className="px-2 hover:bg-[#d2d1d1] hover:border-emerald-800 border text-slate-800 border-slate-800 hover:text-emerald-800 rounded-full mr-2"
+                    className="p-1 px-3 hover:bg-[#d2d1d1] transition ease-in-out  bg-[#EBEADF] hover:border-[#00473B] font-light  rounded-full mr-2"
                     onClick={() => handleAddToCart(locationId, menuItem.id, 1)}
                   >
                     +
                   </button>
-                  <button
-                    className="px-2 hover:bg-[#d2d1d1] hover:border-emerald-800 border text-slate-800 border-slate-800 hover:text-emerald-800 rounded-full"
-                    onClick={() =>
-                      handleSubtractFromCart(locationId, menuItem.id)
-                    }
-                  >
-                    -
-                  </button>
-                  <button
-                    className="px-2 hover:bg-[#d2d1d1] hover:border-emerald-800 border text-slate-800 border-slate-800 hover:text-emerald-800 text-sm rounded-full ml-2"
-                    onClick={() =>
-                      handleRemoveFromCart(locationId, menuItem.id)
-                    }
-                  >
-                    remove all
-                  </button>
+                  {isItemInCart(cartItems, menuItem.id) && (
+                    <button
+                      className="p-1 px-3  hover:bg-[#d2d1d1] transition ease-in-out  bg-[#EBEADF] hover:border-[#00473B] font-light rounded-full"
+                      onClick={() =>
+                        handleSubtractFromCart(locationId, menuItem.id)
+                      }
+                    >
+                      {"-"}
+                    </button>
+                  )}
+                  {isItemInCart(cartItems, menuItem.id) && (
+                    <button
+                      className="px-2 py-1 ml-2"
+                      onClick={() =>
+                        handleRemoveFromCart(locationId, menuItem.id)
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
