@@ -3,7 +3,7 @@
 Order fresh food across the galaxy! Our locations are rapidly expanding, and we currently have offerings in Mars and California (Earth). Pickup only...
 
 <div align="center">
-    <img src="public/cosmicgreen-product.gif" width="600" alt="Cosmicgreens Product">
+    <img src="public/cosmicgreens-walkthrough.gif" width="600" alt="Cosmicgreens Product">
 </div>
 
 **NOTE:** this is a mock eCommerce application and not a real business :)  
