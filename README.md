@@ -56,6 +56,11 @@ Once the installation is complete, start the application:
 npm start
 ```
 
+View cosmicgreens at [localhost:3000](http://localhost:3000/)
+- Try to order any items you like
+- Try to order from different locations
+- Try to complete a purchase without any items in the cart
+
 ## What's going on? 
 
 cosmicgreen relies on graphql and react. Graphql powers both the frontend and backend through simple HTTP request/query handling. The data returned is used to fund all the info needed to build the React components
