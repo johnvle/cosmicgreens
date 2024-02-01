@@ -4,6 +4,9 @@ import { useLocation } from "../../context/location-context";
 import { useCart } from "../../context/cart-context";
 import { handlePriceConversion } from "../../utils/utils";
 import NavBar from "../common/NavBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
 function CartSummary() {
   const navigate = useNavigate();
 
@@ -13,12 +16,18 @@ function CartSummary() {
 
   // grab global cartItems data from cart-context
   const {
+    addToCart,
     subtractFromCart,
     removeFromCart,
     checkoutCart,
     cartItems,
     subTotal,
   } = useCart();
+
+  // ADD TO CART as defined by GraphQL resolvers and cart-context
+  const handleAddToCart = (locationId, menuItemID) => {
+    addToCart(locationId, menuItemID, 1);
+  };
 
   const handleSubtractFromCart = (locationId, menuItemId) => {
     subtractFromCart(locationId, menuItemId);
@@ -29,8 +38,12 @@ function CartSummary() {
   };
 
   const handleCheckoutCart = () => {
-    checkoutCart();
-    navigate("/confirmation");
+    if (cartItems.length > 0) {
+      checkoutCart();
+      navigate("/confirmation");
+    } else {
+      return window.alert("Please order some items first!");
+    }
   };
 
   return (
@@ -48,52 +61,84 @@ function CartSummary() {
             or order more
           </button>
         </div>
-        <main className="flex flex-col shrink w-full h-auto justify-center items-center mb-8">
-          <div className="flex flex-col border border-black w-[28rem] h-full relative ">
+        <main className="flex flex-col shrink h-auto justify-center items-center mb-8 ">
+          <div className="flex flex-col w-[28rem] h-full relative bg-[#F4F3E7] rounded-lg p-4">
             <div className="text-slate-800 self-center border-b border-slate-700 my-6 ">
               Your Order Summary
             </div>
             <div className="flex flex-col">
               {cartItems.map((cartItem) => (
-                <div className="p-2 m-2" key={cartItem.menuItem.id}>
-                  <div className="font-semibold">{cartItem.menuItem.name}</div>
-                  <div className="text-sm italic">
-                    {cartItem.menuItem.description}
-                  </div>
-                  <span className="flex items-center space-x-2">
-                    <div className="rounded-full border border-slate-800 px-2 py-1 w-min text-sm">
-                      {cartItem.quantity}
-                      {"x"}
-                    </div>
-                    <div>
-                      $
-                      {handlePriceConversion(
-                        cartItem.menuItem.price * cartItem.quantity
-                      )}
-                    </div>
-                  </span>
-                  <button
-                    className="px-2 hover:bg-[#d2d1d1] hover:border-emerald-800 border text-slate-800 border-slate-800 hover:text-emerald-800 text-sm rounded-full"
-                    onClick={() =>
-                      handleSubtractFromCart(locationId, cartItem.menuItem.id)
-                    }
+                <div className="p-2 m-2 flex" key={cartItem.menuItem.id}>
+                  <aside
+                    id="cartItem-img-container"
+                    className="w-1/3 flex items-center"
                   >
-                    Subtract One
-                  </button>
-                  <button
-                    className="px-2 mt-2 hover:bg-[#d2d1d1] hover:border-emerald-800 border text-slate-800 border-slate-800 hover:text-emerald-800 text-sm rounded-full ml-2"
-                    onClick={() =>
-                      handleRemoveFromCart(locationId, cartItem.menuItem.id)
-                    }
-                  >
-                    Remove
-                  </button>
-                  <hr />
+                    <div className="">
+                      <img
+                        src="https://static.vecteezy.com/system/resources/previews/015/698/916/original/cartoon-food-doodle-kawaii-anime-coloring-page-cute-illustration-drawing-clipart-character-chibi-manga-comics-free-png.png"
+                        alt="snapshot of the item"
+                        className="object-cover scale-125"
+                      ></img>
+                    </div>
+                  </aside>
+                  <section id="cartItem-summary" className="px-2  w-full">
+                    <div className="font-semibold">
+                      {cartItem.menuItem.name}
+                    </div>
+                    <div className="text-sm italic py-4">
+                      {cartItem.menuItem.description}
+                    </div>
+                    <span className="mb-2 flex items-center w-full justify-between space-x-2">
+                      <div className="rounded-full border border-black px-2 py-1  text-sm ">
+                        {cartItem.quantity}
+                        {"x"}
+                      </div>
+                      <div className="font-thin italic">
+                        $
+                        {handlePriceConversion(
+                          cartItem.menuItem.price * cartItem.quantity
+                        )}
+                      </div>
+                    </span>
+                    <div
+                      id="item operations panel"
+                      className="flex flex-row-reverse"
+                    >
+                      <button
+                        className="px-2 py-1 ml-2"
+                        onClick={() =>
+                          handleRemoveFromCart(locationId, cartItem.menuItem.id)
+                        }
+                      >
+                        <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                      </button>
+                      <button
+                        className="p-1 px-3  hover:bg-[#d2d1d1] transition ease-in-out  bg-[#EBEADF] hover:border-[#00473B] font-light rounded-full"
+                        onClick={() =>
+                          handleSubtractFromCart(
+                            locationId,
+                            cartItem.menuItem.id
+                          )
+                        }
+                      >
+                        {"-"}
+                      </button>
+                      <button
+                        className="p-1 px-3 hover:bg-[#d2d1d1] transition ease-in-out  bg-[#EBEADF] hover:border-[#00473B] font-light  rounded-full mr-2"
+                        onClick={() =>
+                          handleAddToCart(locationId, cartItem.menuItem.id, 1)
+                        }
+                      >
+                        {"+"}
+                      </button>
+                    </div>
+                  </section>
                 </div>
               ))}
             </div>
             <div className="mb-4">
-              <div className="flex flex-row justify-between ml-4 mr-4 border-t border-black my-4 p-1">
+              <div className="ml-4 mr-4 border-b border-black"></div>
+              <div className="flex flex-row justify-between ml-4 mr-4 mt-6 mb-4 p-1">
                 <div>Subtotal:</div>
                 <div>${handlePriceConversion(subTotal)}</div>
               </div>

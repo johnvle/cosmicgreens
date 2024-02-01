@@ -1,5 +1,3 @@
-// resolvers.js
-
 import { locations } from "../mockDB/_db.js";
 
 let shoppingCart = {

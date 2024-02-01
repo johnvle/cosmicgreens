@@ -1,5 +1,5 @@
 // Data populated by Mockaroo
-// NOTE: In production environments, it's very common—and highly recommended—to represent currency amounts in the smallest increment of money possible. But for this small-project I will be representing currency in dollars not cents
+
 const nuwaMenuItems = [
   {
     id: "nuwa1",
@@ -34,7 +34,7 @@ const nuwaMenuItems = [
     id: "nuwa5",
     name: "Stellar Spinach Wrap",
     description:
-      "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem.",
+      "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing.",
     price: 2000,
     locationId: "2",
   },
@@ -49,7 +49,7 @@ const nuwaMenuItems = [
     id: "nuwa7",
     name: "Celestial Chia Pudding",
     description:
-      "Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget.",
+      "Donec ut mauris eget massa tempor convallis. Nulla neque libero.",
     price: 7790,
     locationId: "2",
   },
@@ -71,9 +71,22 @@ const nuwaMenuItems = [
   {
     id: "nuwa10",
     name: "Supernova Salad Wrap",
-    description:
-      "Donec dapibus. Duis at velit eu est congue elementum.",
+    description: "Donec dapibus. Duis at velit eu est congue elementum.",
     price: 704,
+    locationId: "2",
+  },
+  {
+    id: "nuwa11",
+    name: "Organic Red Dust Candy",
+    description: "Morbi non lectus.",
+    price: 250,
+    locationId: "2",
+  },
+  {
+    id: "nuwa12",
+    name: "Curiosity Burger",
+    description: "Burger dedicated to Nasa's Curiosity",
+    price: 3050,
     locationId: "2",
   },
 ];
@@ -132,16 +145,14 @@ const hollywoodMenuItems = [
   {
     id: "hw8",
     name: "Brown Rice Bowl",
-    description:
-      "Nulla ut erat id mauris vulputate elementum. Nullam varius.",
+    description: "Nulla ut erat id mauris vulputate elementum. Nullam varius.",
     price: 1629,
     locationId: "1",
   },
   {
     id: "hw9",
     name: "Miso Soup",
-    description:
-      "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
+    description: "Ut enim ad minima veniam, quis nostrum exercitationem.",
     price: 16,
     locationId: "1",
   },
@@ -150,6 +161,20 @@ const hollywoodMenuItems = [
     name: "Fresh Fruit Salad",
     description: "Fusce consequat.",
     price: 1254,
+    locationId: "1",
+  },
+  {
+    id: "hw11",
+    name: "Fresh Squeezed Orange Juice",
+    description: "Fusce consequat.",
+    price: 470,
+    locationId: "1",
+  },
+  {
+    id: "hw12",
+    name: "BBQ Salmon",
+    description: "Wild rice, warm roasted sweet potatoes...",
+    price: 1595,
     locationId: "1",
   },
 ];
@@ -168,5 +193,3 @@ export const locations = [
     menuItems: nuwaMenuItems,
   },
 ];
-
-// export const menuItems = [...martianMenuItems, ...earthMenuItems];
