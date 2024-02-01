@@ -6,6 +6,7 @@ import LandingPage from "./components/pages/LandingPage";
 import MenuPage from "./components/pages/MenuPage";
 import CheckoutPage from "./components/pages/CheckoutPage";
 import ConfirmationPage from "./components/pages/ConfirmationPage";
+
 import { CartContextProvider } from "./context/cart-context";
 
 function App() {

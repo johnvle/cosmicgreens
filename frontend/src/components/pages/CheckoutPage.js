@@ -38,8 +38,12 @@ function CartSummary() {
   };
 
   const handleCheckoutCart = () => {
-    checkoutCart();
-    navigate("/confirmation");
+    if (cartItems.length > 0) {
+      checkoutCart();
+      navigate("/confirmation");
+    } else {
+      return window.alert("Please order some items first!");
+    }
   };
 
   return (
@@ -64,10 +68,7 @@ function CartSummary() {
             </div>
             <div className="flex flex-col">
               {cartItems.map((cartItem) => (
-                <div
-                  className="p-2 m-2 flex"
-                  key={cartItem.menuItem.id}
-                >
+                <div className="p-2 m-2 flex" key={cartItem.menuItem.id}>
                   <aside
                     id="cartItem-img-container"
                     className="w-1/3 flex items-center"
@@ -80,10 +81,7 @@ function CartSummary() {
                       ></img>
                     </div>
                   </aside>
-                  <section
-                    id="cartItem-summary"
-                    className="px-2  w-full"
-                  >
+                  <section id="cartItem-summary" className="px-2  w-full">
                     <div className="font-semibold">
                       {cartItem.menuItem.name}
                     </div>

@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { useLocation } from "../../context/location-context";
-// import { useCart } from "../../context/cart-context";
 import NavBar from "../common/NavBar";
 
 const GET_LOCATION = gql`

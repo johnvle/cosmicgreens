@@ -1,5 +1,5 @@
 // Data populated by Mockaroo
-// NOTE: In production environments, it's very common—and highly recommended—to represent currency amounts in the smallest increment of money possible. But for this small-project I will be representing currency in dollars not cents
+
 const nuwaMenuItems = [
   {
     id: "nuwa1",
@@ -193,5 +193,3 @@ export const locations = [
     menuItems: nuwaMenuItems,
   },
 ];
-
-// export const menuItems = [...martianMenuItems, ...earthMenuItems];
